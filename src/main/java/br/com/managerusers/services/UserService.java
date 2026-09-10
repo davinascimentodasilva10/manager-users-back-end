@@ -1,6 +1,8 @@
 package br.com.managerusers.services;
 
 import br.com.managerusers.dtos.UserDTO;
+import br.com.managerusers.entities.User;
+import br.com.managerusers.exceptions.UserNotFoundException;
 import br.com.managerusers.mappers.UserMapper;
 import br.com.managerusers.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,17 @@ public class UserService {
                 .stream()
                 .map(userMapper::toDTO)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new UserNotFoundException(
+                                String.format("User with Id: %d Not Found", id)
+                        )
+                );
+        return userMapper.toDTO(user);
     }
 
 }
