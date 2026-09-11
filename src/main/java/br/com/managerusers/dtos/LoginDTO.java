@@ -1,20 +1,18 @@
 package br.com.managerusers.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class UserDTO {
+public class LoginDTO {
 
     @EqualsAndHashCode.Include
     private Long id;
     private String email;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    private String token;
 
 }
